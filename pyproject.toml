@@ -1,0 +1,47 @@
+[project]
+name = "llm-jp-modernbert"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "speed1313", email = "speedtry13@icloud.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "transformers>=4.50.0",
+    "accelerate==1.6.0",
+    "scikit-learn>=1.5.2",
+    "wandb>=0.18.6",
+    "tokenizers>=0.20.3",
+    "torch>=2.5.1",
+    "flash-attn>=2.7.3",
+    "datasets==3.2.0",
+    "torchdata>=0.10.1",
+    "sentence-transformers>=3.4.1",
+    "evaluate>=0.4.3",
+    "tabulate>=0.9.0",
+    "sentencepiece>=0.2.0",
+    "seaborn>=0.13.2",
+    "scipy>=1.15.2",
+    "protobuf>=5.29.4",
+    "openpyxl>=3.1.5",
+    "matplotlib>=3.10.1",
+    "japanize-matplotlib>=1.1.3",
+    "fugashi[unidic-lite]>=1.4.0",
+    "adjusttext>=1.3.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.7.3",
+]
+
+[tool.uv]
+no-build-isolation-package = ["flash-attn"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
