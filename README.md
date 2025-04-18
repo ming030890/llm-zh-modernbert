@@ -7,12 +7,8 @@ This repository contains train and evaluation code for [llm-jp-modernbert-base](
 $ uv sync
 ```
 
-# Train
+## Train
 
-
-## Prepare llm-jp-modernbert-base
-
-You can skip this step if you already have the model.
 
 ### Prepare Tokenizer
 
@@ -53,7 +49,7 @@ To set up a modernbert-base model with the modified tokenizer, run:
 python src/train/prepare_modernbert.py
 ```
 
-## Pre-train
+### Pre-train
 
 To train the model, run the following command (This script uses Japanese subset of the Wikipedia):
 ```bash
@@ -66,8 +62,7 @@ https://github.com/huggingface/transformers/blob/main/examples/pytorch/language-
 
 Unlike the original, which does not support checkpoint resumption when using IterableDataset, this code supports resuming from checkpoints even when using IterableDataset.
 
-
-## Prepare Custom Dataset
+#### Use Custom Dataset
 
 Prepare your dataset by placing JSON files containing only a "text" field into separate train and test directories, as shown below:
 
@@ -100,11 +95,11 @@ This is because IterableDataset performs approximate shuffling: it first shuffle
 If individual files are too large, the shuffling becomes less effective due to limited mixing across files.
 For more detailes, refer to the [Hugging Face documentation](https://huggingface.co/docs/datasets/v3.5.0/en/package_reference/main_classes#datasets.IterableDataset.shuffle).
 
-# Evaluation
+## Evaluation
 Let's evaluate BERT models from various perspectives!
 
 
-## Evaluate on JGLUE
+### Evaluate on JGLUE
 
 To evaluate the performance of models on the JGLUE benchmark, run the following command:
 ```bash
@@ -127,7 +122,7 @@ $ python src/eval/make_leaderboard.py
 | llm-jp/llm-jp-modernbert-base | 91.8 | 91.3 | 84.4  | 89.2       |
 
 
-## Zero-shot Sentence Retrieval Task using miracl dataset
+### Zero-shot Sentence Retrieval Task using miracl dataset
 
 To evaluate the retrieval performance of models on the miracl dataset, run the following command:
 ```bash
@@ -138,7 +133,7 @@ MRR@10: 0.389
 ```
 
 
-## Pseudo-Perplexity
+### Pseudo-Perplexity
 
 To conduct the pseudo-perplexity evaluation (refer to the paper [NeoBERT](https://arxiv.org/abs/2502.19587)), run the following command:
 ```bash
@@ -147,7 +142,7 @@ $ python src/eval/pseudo_perplexity.py --model llm-jp/llm-jp-modernbert-base --n
 ![pseudo-perplexity](./results/pseudo_perplexity/llm-jp/llm-jp-modernbert-base/pseudo_perplexity.png)
 You can decrease the number of examples to speed up the evaluation.
 
-## Alignment & Uniformity
+### Alignment & Uniformity
 
 To conduct the alignment and uniformity evaluation (refer to the paper [SimCSE](https://arxiv.org/abs/2104.08821)), run the following command:
 ```bash
@@ -161,7 +156,7 @@ $ python src/eval/sim_distribution.py --model llm-jp/llm-jp-modernbert-base
 ```
 ![similarity_distribution](./results/sentence_sim_dist/llm-jp/llm-jp-modernbert-base/distribution.png)
 
-## Fill Mask Task
+### Fill Mask Task
 
 To compare the performance of BERT models on the fill-mask task, run the following command:
 ```bash
@@ -172,16 +167,15 @@ cl-tohoku/bert-base-japanese-v3: こう, sbintuitions/modernbert-ja-130m: カレ
 
 
 
-# References
+## References
 
 - [ModernBERT](https://arxiv.org/abs/2412.13663)
 - [run_mlm_no_trainer.py, HuggingFace transformers](https://github.com/huggingface/transformers/blob/main/examples/pytorch/language-modeling/run_mlm_no_trainer.py)
 - [llm-jp-tokenizer](https://github.com/llm-jp/llm-jp-tokenizer)
 - [llm-jp-corpus-v3](https://gitlab.llm-jp.nii.ac.jp/datasets/llm-jp-corpus-v3)
-
-- HuggingFace transformers, https://github.com/huggingface/transformers/blob/main/examples/pytorch/text-classification/run_glue_no_trainer.py
-- JGLUE, https://github.com/yahoojapan/JGLUE
-- SimCSE, https://arxiv.org/abs/2104.08821
-- NeoBERT, https://arxiv.org/abs/2502.19587
+- [run_glue_no_trainer.py, HuggingFace transformers](https://github.com/huggingface/transformers/blob/main/examples/pytorch/text-classification/run_glue_no_trainer.py)
+- [JGLUE](https://github.com/yahoojapan/JGLUE)
+- [SimCSE](https://arxiv.org/abs/2104.08821)
+- [NeoBERT](https://arxiv.org/abs/2502.19587)
 
 
