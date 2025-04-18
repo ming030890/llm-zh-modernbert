@@ -33,7 +33,6 @@ elif [ "$DATASET_NAME" = "ja_cc" ]; then
 fi
 
 DATE=`date "+%Y%m%d-%H%M"`
-DATE=20250418-1606
 EXP_NAME=${MODEL_NAME}_${DATASET_NAME}_msl${MAX_SEQ_LEN}-lr${LEARNING_RATE}-bs${TOTAL_BATCH_SIZE}-ws${WARMUP_STEPS}-ms${MAX_STEPS}-mlm${MLM_PROBABILITY}-buf${BUFFER_SIZE}-${DATE}
 
 # Wandb settings

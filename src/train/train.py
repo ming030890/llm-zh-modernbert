@@ -875,7 +875,8 @@ def main():
     )
 
     query_sentences, corpus_sentences = prepare_dataset()
-
+    seen_tokens_per_device = 0
+    seen_tokens_without_padding_per_device = 0
     while completed_steps < args.max_train_steps:
         for _, batch in enumerate(active_dataloader):
             start_time = time.perf_counter()  # ステップ開始時刻を記録
@@ -886,8 +887,8 @@ def main():
                 accelerator.backward(loss)
                 total_loss += loss.detach()
                 total_batches += 1
-                total_seen_tokens += batch["input_ids"].numel()
-                total_seen_tokens_without_padding += (
+                seen_tokens_per_device += batch["input_ids"].numel()
+                seen_tokens_without_padding_per_device += (
                     (batch["input_ids"] != tokenizer.pad_token_id).sum().item()
                 )
                 if accelerator.sync_gradients:
@@ -910,23 +911,23 @@ def main():
                 avg_grad_norm = (
                     accelerator.gather(grad_norm.clone().detach()).mean().item()
                 )
-                gathered_seen_tokens = (
+                total_seen_tokens += (
                     accelerator.gather(
-                        torch.tensor(total_seen_tokens, device=accelerator.device)
+                        torch.tensor(seen_tokens_per_device, device=accelerator.device)
                     )
                     .sum()
                     .item()
                 )
-                gathered_seen_tokens_without_padding = (
+                total_seen_tokens_without_padding += (
                     accelerator.gather(
                         torch.tensor(
-                            total_seen_tokens_without_padding, device=accelerator.device
+                            seen_tokens_without_padding_per_device,
+                            device=accelerator.device,
                         )
                     )
                     .sum()
                     .item()
                 )
-
                 if completed_steps % args.logging_steps == 0:
                     lr = optimizer.param_groups[0]["lr"]
                     avg_step_time = sum(step_times) / len(
@@ -942,16 +943,18 @@ def main():
                             "train/flops": flops,
                             "train/total_flops": flops * completed_steps,
                             "train/epoch": epoch,
-                            "train/total_seen_tokens": gathered_seen_tokens,
-                            "train/total_seen_tokens_without_padding": gathered_seen_tokens_without_padding,
+                            "train/total_seen_tokens": total_seen_tokens,
+                            "train/total_seen_tokens_without_padding": total_seen_tokens_without_padding,
                         },
                         step=completed_steps,
                     )
                     logger.info(
-                        f"Step {completed_steps}, loss: {loss}, lr: {lr}, grad_norm: {grad_norm}, time_per_step: {avg_step_time}, flops: {flops}, total_flops: {flops * completed_steps}, epoch: {epoch}, total_seen_tokens: {gathered_seen_tokens:,} total_seen_tokens_without_padding: {gathered_seen_tokens_without_padding:,}"
+                        f"Step {completed_steps}, loss: {loss}, lr: {lr}, grad_norm: {grad_norm}, time_per_step: {avg_step_time}, flops: {flops}, total_flops: {flops * completed_steps}, epoch: {epoch}, total_seen_tokens: {total_seen_tokens}, total_seen_tokens_without_padding: {total_seen_tokens_without_padding}"
                     )
                 total_batches = 0
                 total_loss = 0.0
+                seen_tokens_per_device = 0
+                seen_tokens_without_padding_per_device = 0
 
                 # validation
                 if completed_steps % args.validation_steps == 0:
@@ -1010,8 +1013,8 @@ def main():
                         # save current epoch and total token seen
                         custom_state = {
                             "epoch": epoch,
-                            "total_seen_tokens": gathered_seen_tokens,
-                            "total_seen_tokens_without_padding": gathered_seen_tokens_without_padding,
+                            "total_seen_tokens": total_seen_tokens,
+                            "total_seen_tokens_without_padding": total_seen_tokens_without_padding,
                         }
                         with open(
                             os.path.join(output_dir, "custom_state.json"), "w"

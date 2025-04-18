@@ -1,6 +1,11 @@
 # llm-jp-modernbert
 This repository contains train and evaluation code for [llm-jp-modernbert-base](https://huggingface.co/llm-jp/llm-jp-modernbert-base).
 
+Technical report is here: [lm-jp-modernbert: A ModernBERT Model Trained on a Large-Scale Japanese Corpus with Long Context Length]().
+
+This repository provides the training and evaluation code for llm-jp-modernbert-base.
+The technical report is available here: [lm-jp-modernbert: A ModernBERT Model Trained on a Large-Scale Japanese Corpus with Long Context Length].
+
 ## Installation
 
 ```bash
@@ -165,7 +170,11 @@ Question: 今日のご飯は{mask_str}である。
 cl-tohoku/bert-base-japanese-v3: こう, sbintuitions/modernbert-ja-130m: カレーライス, llm-jp/llm-jp-modernbert-base: 納豆,
 ```
 
+## Citation
 
+```bibtex
+TODO:
+```
 
 ## References
 
