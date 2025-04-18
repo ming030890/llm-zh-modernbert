@@ -53,7 +53,7 @@ To set up a modernbert-base model with the modified tokenizer, run:
 python src/train/prepare_modernbert.py
 ```
 
-## Train
+## Pre-train
 
 To train the model, run the following command (This script uses Japanese subset of the Wikipedia):
 ```bash
