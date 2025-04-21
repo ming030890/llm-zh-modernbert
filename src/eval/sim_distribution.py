@@ -44,18 +44,21 @@ if __name__ == "__main__":
     result_dict = {}
 
     model_list = args.model_list
-    # model_list = [
-    #     # "speed/llm-jp-modernbert-base-v4-ja-stage1-0k",
-    #     # "speed/llm-jp-modernbert-base-v4-ja-stage1-4k",
-    #     # "speed/llm-jp-modernbert-base-v4-ja-stage1-15k",
-    #     # "speed/llm-jp-modernbert-base-v4-ja-stage1-50k",
-    #     "speed/llm-jp-modernbert-base-v4-ja-stage1-100k",
-    #     "speed/llm-jp-modernbert-base-v4-ja-stage1-200k",
-    #     "speed/llm-jp-modernbert-base-v4-ja-stage1-300k",
-    #     "speed/llm-jp-modernbert-base-v4-ja-stage1-400k",
-    #     "speed/llm-jp-modernbert-base-v4-ja-stage1-500k",
-    #     "speed/llm-jp-modernbert-base-v4-ja-stage2-200k",
-    # ]
+    model_list = [
+        "speed/llm-jp-modernbert-base-v4-ja-stage1-0k",
+        "speed/llm-jp-modernbert-base-v4-ja-stage1-4k",
+        "speed/llm-jp-modernbert-base-v4-ja-stage1-15k",
+        #     # "speed/llm-jp-modernbert-base-v4-ja-stage1-50k",
+        "speed/llm-jp-modernbert-base-v4-ja-stage1-100k",
+        #     "speed/llm-jp-modernbert-base-v4-ja-stage1-200k",
+        #     "speed/llm-jp-modernbert-base-v4-ja-stage1-300k",
+        "speed/llm-jp-modernbert-base-v4-ja-stage1-400k",
+        #     "speed/llm-jp-modernbert-base-v4-ja-stage1-500k",
+        "speed/llm-jp-modernbert-base-v4-ja-stage2-200k",
+        "cl-nagoya/ruri-large-v2",
+        "tohoku-nlp/bert-base-japanese-v3",
+        "sbintuitions/modernbert-ja-130m",
+    ]
     for model_id in model_list:
         print(f"Model: {model_id}")
         model = SentenceTransformer(model_id).to(device)
@@ -75,7 +78,11 @@ if __name__ == "__main__":
         # plt.title(model_id)
         plt.xlabel("Alignment score")
         plt.ylabel("Frequency")
-        plt.xlim(0, 1)
+        plt.ylim(0, 600)
+        plt.xlim(0, 2)
+        plt.tight_layout()
+        if "speed" in model_id:
+            model_id = model_id.replace("speed", "llm-jp")
         os.makedirs(os.path.join("results/sentence_sim_dist", model_id), exist_ok=True)
         plt.savefig(
             os.path.join("results/sentence_sim_dist", model_id, "distribution.png")

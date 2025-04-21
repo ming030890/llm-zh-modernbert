@@ -152,6 +152,7 @@ You can decrease the number of examples to speed up the evaluation.
 To conduct the alignment and uniformity evaluation (refer to the paper [SimCSE](https://arxiv.org/abs/2104.08821)), run the following command:
 ```bash
 $ python src/eval/alignment_and_uniformity.py
+$ python src/eval/plot_align_and_uni.py 
 ```
 ![Alignment & Uniformity](./Alignment_vs_Uniformity.png)
 

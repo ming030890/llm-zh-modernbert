@@ -3,10 +3,8 @@ import torch.nn.functional as F
 from sentence_transformers import SentenceTransformer
 from datasets import load_dataset
 from matplotlib import pyplot as plt
-import seaborn as sns
 from argparse import ArgumentParser
 import json
-from adjustText import adjust_text
 import os
 
 
@@ -98,6 +96,9 @@ if __name__ == "__main__":
     #     # "speed/llm-jp-modernbert-base-v4-ja-stage1-400k",
     #     "speed/llm-jp-modernbert-base-v4-ja-stage1-500k",
     #     "speed/llm-jp-modernbert-base-v4-ja-stage2-200k",
+    #     "cl-nagoya/ruri-large-v2",
+    #     "tohoku-nlp/bert-base-japanese-v3",
+    #     "sbintuitions/modernbert-ja-130m",
     # ]
 
     for model_id in model_list:
@@ -119,51 +120,11 @@ if __name__ == "__main__":
             "alignment": alignment_score,
             "uniformity": uniformity_score,
         }
-
-    # Plot Alignment vs. Uniformity
-
-    data = []
-    for model_id, scores in result_dict.items():
-        miracl_result_path = os.path.join(
-            args.output_dir, "miracl", model_id, "results.json"
+        os.makedirs(
+            os.path.join("results/alignment_and_uniformity", model_id), exist_ok=True
         )
-        if not os.path.exists(miracl_result_path):
-            recall = 0
-        else:
-            with open(miracl_result_path, "r") as f:
-                data_json = json.load(f)
-                # {"Recall@10": 0.6723940435280642, "MRR@10": 0.47000740922562306}
-            recall = data_json["Recall@10"]
-        data.append((model_id, scores["alignment"], scores["uniformity"], recall))
-
-    # 散布図データ抽出
-    labels, aligns, uniforms, scores = zip(*data)
-
-    # プロット設定
-    plt.figure(figsize=(10, 8))
-    norm = plt.Normalize(min(scores), max(scores))
-    cmap = sns.color_palette("magma", as_cmap=True)
-    sc = plt.scatter(
-        uniforms, aligns, c=scores, cmap=cmap, norm=norm, s=100, edgecolors="k"
-    )
-
-    texts = []
-
-    for label, x, y in zip(labels, uniforms, aligns):
-        label = label.split("/")[-1]
-        label = "-".join(label.split("-")[-2:])
-        texts.append(plt.text(x, y, label))
-
-    adjust_text(texts, arrowprops=dict(arrowstyle="->", color="r", lw=0.5))
-
-    # 軸ラベル
-    plt.xlabel(r"$\ell_{uniform}$")
-    plt.ylabel(r"$\ell_{align}$")
-
-    # カラーバー（スコア用）(上部に配置)
-    cbar = plt.colorbar(sc, orientation="horizontal", pad=0.1)
-
-    cbar.set_label("Recall@10 on miracl")
-    plt.tight_layout()
-    plt.grid(True, which="both", linestyle="--", linewidth=0.5)
-    plt.savefig("Alignment_vs_Uniformity.png")
+        with open(
+            os.path.join("results/alignment_and_uniformity", model_id, "result.json"),
+            "w",
+        ) as f:
+            json.dump(result_dict[model_id], f, indent=4)
