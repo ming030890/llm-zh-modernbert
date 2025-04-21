@@ -52,7 +52,7 @@ To set up a modernbert-base model with the modified tokenizer, run:
 python src/train/prepare_modernbert.py
 ```
 
-### Pre-train
+### Pretrain
 
 To train the model, run the following command (This script uses Japanese subset of the Wikipedia):
 ```bash
@@ -104,7 +104,7 @@ Let's evaluate BERT models from various perspectives!
 
 ### Evaluate on JGLUE
 
-To evaluate the performance of models on the JGLUE benchmark, run the following command:
+Evaluate the performance of models on the JGLUE benchmark:
 ```bash
 $ python src/eval/run_glue_no_trainer.py \
                 --model_name_or_path llm-jp/llm-jp-modernbert-base \
@@ -116,7 +116,7 @@ $ python src/eval/run_glue_no_trainer.py \
                 --output_dir results
 ```
 
-Make leaderboard
+Make leaderboard:
 ```bash
 $ python src/eval/make_leaderboard.py
 ```
@@ -125,9 +125,9 @@ $ python src/eval/make_leaderboard.py
 | llm-jp/llm-jp-modernbert-base | 91.8 | 91.3 | 84.4  | 89.2       |
 
 
-### Zero-shot Sentence Retrieval Task using miracl dataset
+### Zero-shot Sentence Retrieval Task using MIRACL dataset
 
-To evaluate the retrieval performance of models on the miracl dataset, run the following command:
+Eevaluate the retrieval performance of models on the MIRACL dataset:
 ```bash
 $ python src/eval/zeroshot_retrieval.py --model llm-jp/llm-jp-modernbert-base
 Model: llm-jp/llm-jp-modernbert-base
@@ -138,7 +138,7 @@ MRR@10: 0.389
 
 ### Pseudo-Perplexity
 
-To conduct the pseudo-perplexity evaluation (refer to the paper [NeoBERT](https://arxiv.org/abs/2502.19587)), run the following command:
+Conduct the pseudo-perplexity evaluation (refer to the paper [NeoBERT](https://arxiv.org/abs/2502.19587)):
 ```bash
 $ python src/eval/pseudo_perplexity.py --model llm-jp/llm-jp-modernbert-base --num_examples 2000
 ```
@@ -149,7 +149,7 @@ You can decrease the number of examples to speed up the evaluation.
 
 ### Alignment & Uniformity
 
-To conduct the alignment and uniformity evaluation (refer to the paper [SimCSE](https://arxiv.org/abs/2104.08821)), run the following command:
+Conduct the alignment and uniformity evaluation (refer to the paper [SimCSE](https://arxiv.org/abs/2104.08821)):
 ```bash
 $ python src/eval/alignment_and_uniformity.py
 $ python src/eval/plot_align_and_uni.py
@@ -157,16 +157,16 @@ $ python src/eval/plot_align_and_uni.py
 
 <img src="Alignment_vs_Uniformity.png" alt="Alignment & Uniformity" width="50%"/>
 
-Also, you can visualize the sentence similarity distribution by running the following command:
+Visualize the sentence similarity distribution:
 ```
 $ python src/eval/sim_distribution.py --model llm-jp/llm-jp-modernbert-base
 ```
 
 <img src="results/sentence_sim_dist/llm-jp/llm-jp-modernbert-base/distribution.png" alt="similarity_distribution" width="50%"/>
 
-### Fill Mask Task
+### Fill-Mask Test
 
-To compare the performance of BERT models on the fill-mask task, run the following command:
+Evaluate the fill-mask performance of models:
 ```bash
 $ python src/eval/fill_mask_test.py --text "今日のご飯は{mask_str}である。"
 Question: 今日のご飯は{mask_str}である。
