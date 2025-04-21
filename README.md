@@ -145,7 +145,7 @@ To conduct the pseudo-perplexity evaluation (refer to the paper [NeoBERT](https:
 $ python src/eval/pseudo_perplexity.py --model llm-jp/llm-jp-modernbert-base --num_examples 2000
 ```
 
-<img src="results/pseudo_perplexity/llm-jp/llm-jp-modernbert-base/pseudo_perplexity.png" alt="pseudo-perplexity" width="400"/>
+<img src="results/pseudo_perplexity/llm-jp/llm-jp-modernbert-base/pseudo_perplexity.png" alt="pseudo-perplexity" width="50%"/>
 
 You can decrease the number of examples to speed up the evaluation.
 
@@ -157,14 +157,14 @@ $ python src/eval/alignment_and_uniformity.py
 $ python src/eval/plot_align_and_uni.py
 ```
 
-<img src="Alignment_vs_Uniformity.png" alt="Alignment & Uniformity" width="400"/>
+<img src="Alignment_vs_Uniformity.png" alt="Alignment & Uniformity" width="50%"/>
 
 Also, you can visualize the sentence similarity distribution by running the following command:
 ```
 $ python src/eval/sim_distribution.py --model llm-jp/llm-jp-modernbert-base
 ```
 
-<img src="results/sentence_sim_dist/llm-jp/llm-jp-modernbert-base/distribution.png" alt="similarity_distribution" width="400"/>
+<img src="results/sentence_sim_dist/llm-jp/llm-jp-modernbert-base/distribution.png" alt="similarity_distribution" width="50%"/>
 
 ### Fill Mask Task
 
