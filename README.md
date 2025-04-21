@@ -1,10 +1,8 @@
 # llm-jp-modernbert
-This repository contains train and evaluation code for [llm-jp-modernbert-base](https://huggingface.co/llm-jp/llm-jp-modernbert-base).
 
-Technical report is here: [lm-jp-modernbert: A ModernBERT Model Trained on a Large-Scale Japanese Corpus with Long Context Length]().
+This repository contains the training and evaluation code for [llm-jp/llm-jp-modernbert-base](https://huggingface.co/llm-jp/llm-jp-modernbert-base).
 
-This repository provides the training and evaluation code for llm-jp-modernbert-base.
-The technical report is available here: [lm-jp-modernbert: A ModernBERT Model Trained on a Large-Scale Japanese Corpus with Long Context Length].
+The technical report is available here: [llm-jp-modernbert: A ModernBERT Model Trained on a Large-Scale Japanese Corpus with Long Context Length]().
 
 ## Installation
 
