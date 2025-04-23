@@ -2,7 +2,7 @@
 
 This repository contains the training and evaluation code for [llm-jp/llm-jp-modernbert-base](https://huggingface.co/llm-jp/llm-jp-modernbert-base).
 
-The technical report is available here: [llm-jp-modernbert: A ModernBERT Model Trained on a Large-Scale Japanese Corpus with Long Context Length]().
+The technical report is available here: [llm-jp-modernbert: A ModernBERT Model Trained on a Large-Scale Japanese Corpus with Long Context Length](https://arxiv.org/abs/2504.15544).
 
 ## Installation
 
