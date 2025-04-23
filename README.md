@@ -176,7 +176,15 @@ cl-tohoku/bert-base-japanese-v3: こう, sbintuitions/modernbert-ja-130m: カレ
 ## Citation
 
 ```bibtex
-TODO:
+@misc{sugiura2025llmjpmodernbertmodernbertmodeltrained,
+      title={llm-jp-modernbert: A ModernBERT Model Trained on a Large-Scale Japanese Corpus with Long Context Length}, 
+      author={Issa Sugiura and Kouta Nakayama and Yusuke Oda},
+      year={2025},
+      eprint={2504.15544},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2504.15544}, 
+}
 ```
 
 ## References
