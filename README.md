@@ -1,5 +1,6 @@
 # llm-jp-modernbert
 📚 [Paper](https://arxiv.org/abs/2504.15544) | 🧠 [Model](https://huggingface.co/llm-jp/llm-jp-modernbert-base)
+
 This repository contains the training and evaluation code for [llm-jp/llm-jp-modernbert-base](https://huggingface.co/llm-jp/llm-jp-modernbert-base).
 
 ## Installation
