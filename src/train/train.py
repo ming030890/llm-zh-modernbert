@@ -324,7 +324,7 @@ def parse_args():
     parser.add_argument(
         "--report_to",
         type=str,
-        default="all",
+        default="wandb",
         help=(
             'The integration to report the results and logs to. Supported platforms are `"tensorboard"`,'
             ' `"wandb"`, `"comet_ml"` and `"clearml"`. Use `"all"` (default) to report to all integrations. '
@@ -525,7 +525,6 @@ def main():
         raw_datasets["validation"] = load_dataset(
             "json",
             data_dir=args.validation_dir,
-            split="train",
         )
 
     if args.config_name:
@@ -580,6 +579,7 @@ def main():
     # on a small vocab and want a smaller embedding size, remove this test.
     embedding_size = model.get_input_embeddings().weight.shape[0]
     if len(tokenizer) > embedding_size:
+        print("Resize embedding")
         model.resize_token_embeddings(len(tokenizer))
 
     # Preprocessing the datasets.
@@ -874,7 +874,7 @@ def main():
         * args.gradient_accumulation_steps
     )
 
-    query_sentences, corpus_sentences = prepare_dataset()
+    # query_sentences, corpus_sentences = prepare_dataset()
     seen_tokens_per_device = 0
     seen_tokens_without_padding_per_device = 0
     while completed_steps < args.max_train_steps:
@@ -1021,13 +1021,13 @@ def main():
                         ) as f:
                             json.dump(custom_state, f)
                         # evaluate retrieval
-                        recall, mrr = evaluate_retrieval(
-                            output_dir, query_sentences, corpus_sentences
-                        )
-                        accelerator.log(
-                            {"test/recall": recall, "test/mrr": mrr},
-                            step=completed_steps,
-                        )
+                        # recall, mrr = evaluate_retrieval(
+                        #     output_dir, query_sentences, corpus_sentences
+                        # )
+                        # accelerator.log(
+                        #     {"test/recall": recall, "test/mrr": mrr},
+                        #     step=completed_steps,
+                        # )
             if completed_steps >= args.max_train_steps:
                 break
 
